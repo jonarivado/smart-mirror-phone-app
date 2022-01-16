@@ -12,6 +12,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  name: string = 'Anna';
+  name: string = 'Jonathan';
 
 }
