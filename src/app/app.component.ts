@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'smart-mirror-phone-app';
+
+  gugus: string = 'settings';
 }
