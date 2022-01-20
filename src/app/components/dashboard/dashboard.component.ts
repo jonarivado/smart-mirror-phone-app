@@ -14,6 +14,8 @@ export class DashboardComponent implements OnInit {
     console.log(this.userComponents);
   }
 
+  gugus?: any = []; 
+
   constructor() {
     this.userData = {
       "name": "Anna",
@@ -22,21 +24,27 @@ export class DashboardComponent implements OnInit {
     };
 
     this.userComponents = [
-      {
-          "id": "weather",              // response depends on the component type, feel free to change 
-          "x": 0,
-          "y": 0,
-          "size": [2, 1],
-          "locationString": "Dübendorf"
-      },
-      {
-          "id": "clock",
-          "x": 0,
-          "y": 1,
-          "size": [2, 1],
-          "clockType": "analog"
-      }
-  ];
+        {
+            "id": "weather",              // response depends on the component type, feel free to change 
+            "x": 0,
+            "y": 0,
+            "size": [2, 1],
+            "locationString": "Dübendorf"
+        },
+        {
+            "id": "clock",
+            "x": 0,
+            "y": 1,
+            "size": [2, 1],
+            "clockType": "analog"
+        }
+    ];
+
+    for (const component of this.userComponents) {
+      this.gugus.push(component.id);
+    }
+
+    console.log(this.gugus);
    }
 
   ngOnInit(): void {

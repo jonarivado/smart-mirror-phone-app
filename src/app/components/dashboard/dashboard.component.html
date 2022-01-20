@@ -22,3 +22,13 @@
         <div class="shadow-xl w-full rounded-xl">House Temperature</div>
     </div>
 </div>
+
+<div *ngFor="let component of userComponents">
+    <div *ngIf="component.id == 'weather'">
+        W
+    </div>
+    <div *ngIf="component.id == 'clock'">
+        <app-clock type={{component.clockType}}></app-clock>
+    </div>
+    <div class="p-4 text-xl font-bold">{{component.id}}</div>
+</div>
