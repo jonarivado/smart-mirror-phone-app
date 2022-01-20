@@ -9,6 +9,7 @@ export class DashboardComponent implements OnInit {
 
   userData?: any = {};
   userComponents?: any;
+  positions?: any = [];
 
   if(): void {
     console.log(this.userComponents);
@@ -26,18 +27,21 @@ export class DashboardComponent implements OnInit {
     this.userComponents = [
         {
             "id": "weather",              // response depends on the component type, feel free to change 
-            "x": 0,
-            "y": 0,
+            "position": 1,
             "size": [2, 1],
             "locationString": "Dübendorf"
         },
         {
             "id": "clock",
-            "x": 0,
-            "y": 1,
+            "position": 2,
             "size": [2, 1],
             "clockType": "analog"
-        }
+        },
+        {
+          "id": "empty",
+          "position": 3,
+          "size": [2, 1]
+      }
     ];
 
     for (const component of this.userComponents) {
@@ -48,7 +52,11 @@ export class DashboardComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    
+    for (let position in this.userComponents) {
+      if (this.userComponents[position].pos === 'clock') {
+        this.positions.push(this.userComponents[position].position);
+      }
+    }
   }
 
   
