@@ -23,7 +23,7 @@
     </div>
 </div>
 
-<div *ngFor="let component of userComponents">
+<!-- <div *ngFor="let component of userComponents">
     <div *ngIf="component.id == 'weather'">
         W
     </div>
@@ -31,4 +31,17 @@
         <app-clock type={{component.clockType}}></app-clock>
     </div>
     <div class="p-4 text-xl font-bold">{{component.id}}</div>
+</div> -->
+
+<div class="grid grid-cols-3 grid-rows-2 gap-2 pl-4 pr-4" >
+    <ng-container *ngFor="let component of userComponents">
+    <div *ngIf="component.id == 'weather'" class="shadow-xl w-28 h-28 md:w-40 md:h-40 rounded-xl flex items-center justify-center">
+        <p>weather</p>
+    </div>
+</ng-container>
+<ng-container *ngFor="let component of userComponents">
+    <div *ngIf="component.id == 'clock' " class="{{component.x}} shadow-xl w-28 h-28 md:w-40 md:h-40 rounded-xl flex items-center justify-center">
+        <app-clock></app-clock>
+    </div>
+</ng-container>
 </div>
