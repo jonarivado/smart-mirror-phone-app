@@ -41,7 +41,22 @@ export class DashboardComponent implements OnInit {
           "id": "empty",
           "position": 3,
           "size": [2, 1]
-      }
+      },
+      {
+        "id": "empty",
+        "position": 4,
+        "size": [2, 1]
+    },
+    {
+      "id": "empty",
+      "position": 5,
+      "size": [2, 1]
+  },
+  {
+    "id": "empty",
+    "position": 6,
+    "size": [2, 1]
+}
     ];
 
     for (const component of this.userComponents) {
@@ -52,10 +67,28 @@ export class DashboardComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    for (let position in this.userComponents) {
-      if (this.userComponents[position].pos === 'clock') {
-        this.positions.push(this.userComponents[position].position);
-      }
+    for(let i in this.userComponents) {
+      let key: any = this.userComponents[i].id;
+      switch(this.userComponents[i].position) {
+        case 1:
+          this.positions[key] = 'col-start-1 row-start-1';
+          break;
+        case 2:
+          this.positions[key] = 'col-start-2 row-start-1';
+          break;
+        case 3:
+          this.positions[key] = 'col-start-3 row-start-1';
+          break;
+        case 4:
+          this.positions[key] = 'col-start-1 row-start-2';
+          break;
+        case 5:
+          this.positions[key] = 'col-start-2 row-start-2';
+          break;
+        case 6:
+          this.positions[key] = 'col-start-3 row-start-2';
+          break;
+      } 
     }
   }
 
