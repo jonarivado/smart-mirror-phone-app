@@ -10,12 +10,7 @@ export class DashboardComponent implements OnInit {
   userData?: any = {};
   userComponents?: any;
   positions?: any = [];
-
-  if(): void {
-    console.log(this.userComponents);
-  }
-
-  gugus?: any = []; 
+  emptyPositions: any;
 
   constructor() {
     this.userData = {
@@ -33,37 +28,12 @@ export class DashboardComponent implements OnInit {
         },
         {
             "id": "clock",
-            "position": 2,
+            "position": 5,
             "size": [2, 1],
             "clockType": "analog"
         },
-        {
-          "id": "empty",
-          "position": 3,
-          "size": [2, 1]
-      },
-      {
-        "id": "empty",
-        "position": 4,
-        "size": [2, 1]
-    },
-    {
-      "id": "empty",
-      "position": 5,
-      "size": [2, 1]
-  },
-  {
-    "id": "empty",
-    "position": 6,
-    "size": [2, 1]
-}
     ];
 
-    for (const component of this.userComponents) {
-      this.gugus.push(component.id);
-    }
-
-    console.log(this.gugus);
    }
 
   ngOnInit(): void {
@@ -90,6 +60,9 @@ export class DashboardComponent implements OnInit {
           break;
       } 
     }
+
+    this.emptyPositions = Array(6-this.userComponents.length).fill(0);
+    console.log(this.emptyPositions);
   }
 
   
