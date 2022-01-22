@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ClockComponent } from './components/widgets/clock/clock.component';
+import { WeatherComponent } from './components/widgets/weather/weather.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     SettingsComponent,
-    ClockComponent
+    ClockComponent,
+    WeatherComponent
   ],
   imports: [
     BrowserModule,

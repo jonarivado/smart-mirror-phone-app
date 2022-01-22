@@ -9,10 +9,22 @@ export class DashboardComponent implements OnInit {
 
   userData?: any = {};
   userComponents?: any;
+  positions?: any = [];
+  emptyPositions: any;
 
-  if(): void {
-    console.log(this.userComponents);
+  deleteComponent(position: string) {
+    for(let i in this.userComponents) {
+      if(this.userComponents[i].position == position) {
+        this.userComponents.splice(i, 1);
+        this.emptyPositions.push(1);
+      }
+    }
   }
+
+  showDeleteButton(id: string) {
+    document.getElementById(id)!.style.display = 'block';
+  }
+
 
   constructor() {
     this.userData = {
@@ -22,25 +34,48 @@ export class DashboardComponent implements OnInit {
     };
 
     this.userComponents = [
-      {
-          "id": "weather",              // response depends on the component type, feel free to change 
-          "x": 0,
-          "y": 0,
-          "size": [2, 1],
-          "locationString": "Dübendorf"
-      },
-      {
-          "id": "clock",
-          "x": 0,
-          "y": 1,
-          "size": [2, 1],
-          "clockType": "analog"
-      }
-  ];
+        {
+            "id": "weather",              // response depends on the component type, feel free to change 
+            "position": 1,
+            "size": [2, 1],
+            "locationString": "Dübendorf"
+        },
+        {
+            "id": "clock",
+            "position": 5,
+            "size": [2, 1],
+            "clockType": "analog"
+        },
+    ];
+
    }
 
   ngOnInit(): void {
-    
+    for(let i in this.userComponents) {
+      let key: any = this.userComponents[i].id;
+      switch(this.userComponents[i].position) {
+        case 1:
+          this.positions[key] = 'col-start-1 row-start-1';
+          break;
+        case 2:
+          this.positions[key] = 'col-start-2 row-start-1';
+          break;
+        case 3:
+          this.positions[key] = 'col-start-3 row-start-1';
+          break;
+        case 4:
+          this.positions[key] = 'col-start-1 row-start-2';
+          break;
+        case 5:
+          this.positions[key] = 'col-start-2 row-start-2';
+          break;
+        case 6:
+          this.positions[key] = 'col-start-3 row-start-2';
+          break;
+      } 
+    }
+
+    this.emptyPositions = Array(6-this.userComponents.length).fill(0);
   }
 
   
