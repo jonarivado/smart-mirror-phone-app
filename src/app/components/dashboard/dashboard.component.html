@@ -5,29 +5,29 @@
             <div class="flex items-center justify-center"><a routerLink="/settings" routerLinkActive="active"><img src="../../../assets/img/settings.svg" alt=""></a></div>
         </div>
     <!-- <div class="grid grid-cols-3 grid-rows-2 gap-2 pl-4 pr-4">
-        <div class="shadow-xl w-28 h-28 md:w-40 md:h-40 rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
-        <div class="shadow-xl w-28 h-28 md:w-40 md:h-40 rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
-        <div class="shadow-xl w-28 h-28 md:w-40 md:h-40 rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
-        <div class="shadow-xl w-28 h-28 md:w-40 md:h-40 rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
-        <div class="shadow-xl w-28 h-28 md:w-40 md:h-40 rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
-        <div class="shadow-xl w-28 h-28 md:w-40 md:h-40 rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
+        <div class="shadow-xl   rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
+        <div class="shadow-xl   rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
+        <div class="shadow-xl   rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
+        <div class="shadow-xl   rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
+        <div class="shadow-xl   rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
+        <div class="shadow-xl   rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
     </div>
 </div> -->
 
-<div class="grid grid-cols-3 grid-rows-2 gap-2 pl-4 pr-4" >
+<div class="grid grid-cols-3 grid-rows-2 gap-2 pl-4 pr-4" style="min-height: calc(100vh/3);" >
     <ng-container *ngFor="let empty of emptyPositions">
-        <div class="shadow-xl w-28 h-28 md:w-40 md:h-40 rounded-xl flex items-center justify-center">
+        <div class="shadow-xl   rounded-xl flex items-center justify-center">
             <img src="../../../assets/img/plus_gray.svg" alt="">
         </div>
     </ng-container>
     <ng-container *ngFor="let component of userComponents">
-    <div *ngIf="component.id == 'weather'" (click)='showDeleteButton(component.id)' class="{{positions.weather}} relative shadow-xl w-28 h-28 md:w-40 md:h-40 rounded-xl flex items-center justify-center">
+    <div *ngIf="component.id == 'weather'" (click)='showDeleteButton(component.id)' class="{{positions.weather}} {{width.weather}} {{height.weather}} relative shadow-xl rounded-xl flex items-center justify-center">
         <div (click)='deleteComponent(component.position)' id="{{component.id}}" class="hidden absolute" style="left: -8px; top: -8px"><img src="../../../assets/img/delete.svg" alt=""></div>
         <app-weather></app-weather>
     </div>
 </ng-container>
 <ng-container *ngFor="let component of userComponents">
-    <div *ngIf="component.id == 'clock'" (click)='showDeleteButton(component.id)' class="{{positions.clock}} bg-gradient-to-r from-white to-gray-200 relative shadow-xl w-28 h-28 md:w-40 md:h-40 rounded-xl flex items-center justify-center">
+    <div *ngIf="component.id == 'clock'" (click)='showDeleteButton(component.id)' class="{{positions.clock}} {{width.clock}} {{height.clock}}  bg-gradient-to-r from-white to-gray-200 relative shadow-xl   rounded-xl flex items-center justify-center">
         <div (click)='deleteComponent(component.position)' id="{{component.id}}" class="hidden absolute" style="left: -8px; top: -8px"><img src="../../../assets/img/delete.svg" alt=""></div>
         <app-clock></app-clock>
     </div>
