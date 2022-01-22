@@ -62,7 +62,6 @@ export class DashboardComponent implements OnInit {
     }
 
     this.emptyPositions = Array(6-this.userComponents.length).fill(0);
-    console.log(this.emptyPositions);
   }
 
   

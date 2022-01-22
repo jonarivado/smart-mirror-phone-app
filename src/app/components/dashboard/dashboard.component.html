@@ -21,7 +21,8 @@
         </div>
     </ng-container>
     <ng-container *ngFor="let component of userComponents">
-    <div *ngIf="component.id == 'weather'" class="{{positions.weather}} shadow-xl w-28 h-28 md:w-40 md:h-40 rounded-xl flex items-center justify-center">
+    <div *ngIf="component.id == 'weather'" class="{{positions.weather}} bg-gray-500 relative shadow-xl w-28 h-28 md:w-40 md:h-40 rounded-xl flex items-center justify-center">
+        <div class="absolute" style="left: -8px; top: -8px"><img src="../../../assets/img/delete.svg" alt=""></div>
         <app-weather></app-weather>
     </div>
 </ng-container>
