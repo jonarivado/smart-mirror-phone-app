@@ -12,6 +12,20 @@ export class DashboardComponent implements OnInit {
   positions?: any = [];
   emptyPositions: any;
 
+  deleteComponent(position: string) {
+    for(let i in this.userComponents) {
+      if(this.userComponents[i].position == position) {
+        this.userComponents.splice(i, 1);
+        this.emptyPositions.push(1);
+      }
+    }
+  }
+
+  showDeleteButton(id: string) {
+    document.getElementById(id)!.style.display = 'block';
+  }
+
+
   constructor() {
     this.userData = {
       "name": "Anna",
