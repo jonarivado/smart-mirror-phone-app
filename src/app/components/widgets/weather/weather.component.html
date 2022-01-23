@@ -1,1 +1,5 @@
-<p>weather works!</p>
+<div class="grid grid-cols-1 text-white gap-2 p-2">
+<div class="grid justify-items-center">
+    <img width="90px" src="../../../../assets/img/weather/{{(weatherData | async)?.current_weather.weathercode}}.svg" alt="" srcset="">
+</div>
+</div>

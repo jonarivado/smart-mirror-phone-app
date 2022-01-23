@@ -21,7 +21,7 @@
         </div>
     </ng-container>
     <ng-container *ngFor="let component of userComponents">
-    <div *ngIf="component.id == 'weather'" (click)='showDeleteButton(component.id)' class="{{positions.weather}} {{width.weather}} {{height.weather}} relative shadow-xl rounded-xl flex items-center justify-center">
+    <div *ngIf="component.id == 'weather'" (click)='showDeleteButton(component.id)' class="{{positions.weather}} {{width.weather}} {{height.weather}} bg-gradient-to-r from-blue-400 to-blue-600 relative shadow-xl rounded-xl flex items-center justify-center">
         <div (click)='deleteComponent(component.position)' id="{{component.id}}" class="hidden absolute" style="left: -8px; top: -8px"><img src="../../../assets/img/delete.svg" alt=""></div>
         <app-weather></app-weather>
     </div>
