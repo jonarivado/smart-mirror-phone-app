@@ -10,14 +10,20 @@ export class DashboardComponent implements OnInit {
   userData?: any = {};
   userComponents?: any;
   positions?: any = [];
-  emptyPositions: any;
+  height?: any = [];
+  width?: any = [];
+  occupiedPositions: number = 0;
+  emptyPositions?: any;
 
   deleteComponent(position: string) {
     for(let i in this.userComponents) {
       if(this.userComponents[i].position == position) {
+        let newEmpty = this.userComponents[i].size[0] * this.userComponents[i].size[1];
         this.userComponents.splice(i, 1);
-        this.emptyPositions.push(1);
-      }
+        for(let j = 0; j < newEmpty; j++) {
+          this.emptyPositions.push(0);
+        }
+    }
     }
   }
 
@@ -42,8 +48,8 @@ export class DashboardComponent implements OnInit {
         },
         {
             "id": "clock",
-            "position": 5,
-            "size": [2, 1],
+            "position": 3,
+            "size": [1, 2],
             "clockType": "analog"
         },
     ];
@@ -73,9 +79,35 @@ export class DashboardComponent implements OnInit {
           this.positions[key] = 'col-start-3 row-start-2';
           break;
       } 
+
+      let width: any = this.userComponents[i].size[0];
+      let height: any = this.userComponents[i].size[1];
+      switch(this.userComponents[i].size[0]) {
+        case 1:
+          this.width[key] = 'col-span-1';
+          break;
+        case 2:
+          this.width[key] = 'col-span-2';
+          break;
+        case 3:
+          this.width[key] = 'col-span-3';
+          break;
+      }
+      switch(this.userComponents[i].size[1]) {
+        case 1:
+          this.height[key] = 'row-span-1';
+          break;
+        case 2:
+          this.height[key] = 'row-span-2';
+          break;
+        case 3:
+          this.height[key] = 'row-span-3';
+          break;
+      }
+      this.occupiedPositions += this.userComponents[i].size[0] * this.userComponents[i].size[1];
     }
 
-    this.emptyPositions = Array(6-this.userComponents.length).fill(0);
+    this.emptyPositions = Array(6-this.occupiedPositions).fill(0);
   }
 
   
