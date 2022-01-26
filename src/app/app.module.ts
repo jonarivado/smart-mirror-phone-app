@@ -8,6 +8,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ClockComponent } from './components/widgets/clock/clock.component';
 import { WeatherComponent } from './components/widgets/weather/weather.component';
+import { WeatherSettingsComponent } from './components/component-settings/weather-settings/weather-settings.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -15,12 +18,14 @@ import { WeatherComponent } from './components/widgets/weather/weather.component
     DashboardComponent,
     SettingsComponent,
     ClockComponent,
-    WeatherComponent
+    WeatherComponent,
+    WeatherSettingsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
