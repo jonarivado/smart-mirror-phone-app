@@ -8,11 +8,14 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ClockComponent } from './components/widgets/clock/clock.component';
 import { WeatherComponent } from './components/widgets/weather/weather.component';
+import { SbbComponent } from './components/widgets/sbb/sbb.component';
 
 import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { ComponentSelectorComponent } from './component-selector/component-selector.component';
+import { MemeComponent } from './components/widgets/meme/meme.component';
 
 
 @NgModule({
@@ -21,7 +24,10 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
     DashboardComponent,
     SettingsComponent,
     ClockComponent,
-    WeatherComponent
+    WeatherComponent,
+    SbbComponent,
+    ComponentSelectorComponent,
+    MemeComponent
   ],
   imports: [
     BrowserModule,

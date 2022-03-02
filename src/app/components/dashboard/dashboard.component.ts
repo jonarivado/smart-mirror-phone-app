@@ -1,14 +1,24 @@
-import { AfterContentInit, Component, OnInit } from '@angular/core';
+import {
+  AfterContentInit,
+  Component,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FireAuthService } from 'src/app/services/fireauth.service';
-import { FirestoreService } from 'src/app/services/firestore.service';
+import {
+  FirestoreService,
+  IComponent,
+} from 'src/app/services/firestore.service';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
-
   userData?: any = {};
   userComponents?: any;
   positions?: any = [];
@@ -18,29 +28,76 @@ export class DashboardComponent {
   emptyPositions?: any;
 
   signedOut: boolean = true;
+  selectorOpen: boolean = false;
+  selectedPosition: number = 1;
 
-  deleteComponent(position: string) {
-    for(let i in this.userComponents) {
-      if(this.userComponents[i].position == position) {
-        let newEmpty = this.userComponents[i].size[0] * this.userComponents[i].size[1];
-        this.userComponents.splice(i, 1);
-        for(let j = 0; j < newEmpty; j++) {
-          this.emptyPositions.push(0);
-        }
+  allComponents = [
+    {
+      "id": "weather",
+      "name": "Wetter",
+      "height": 2,
+      "width": 1,
+      "properties": {}
+    },
+    {
+      "id": "clock",
+      "name": "Uhr",
+      "height": 1,
+      "width": 1,
+      "properties": {}
+    },
+    {
+      "id": "sbb",
+      "name": "SBB",
+      "height": 1,
+      "width": 2,
+      "properties": {
+        "start": "Limmatplatz",
+        "destinations": ["Zürich HB", "ETH", "Schaffhausen"]
+      }
+    },
+    {
+      "id": "meme",
+      "name": "Meme",
+      "height": 1,
+      "width": 1,
+      "properties": {}
     }
-    }
+  ]
+  
+  deleteComponent(component: IComponent) {
+    this.firestoreService.deleteComponent(component);
   }
 
   showDeleteButton(id: string) {
-    document.getElementById(id)!.style.display = 'block';
+    const component = document.getElementById(id);
+
+    if (!component) return;
+
+    if (component.style.display == '') {
+      component.style.display = 'block';
+    } else {
+      component.style.display = '';
+    }
   }
 
-  augmentComponentClasses() {
-    let occupiedPositions = 0;
+  openSelector(position: number) {
+    this.selectorOpen = true;
+    this.selectedPosition = position;
+  }
 
-    for (const component of this.userComponents) {   
+  addComponent(component: any) {
+    this.selectorOpen = false;
+    component['position'] = this.selectedPosition;
+    this.firestoreService.addComponent(component);
+  } 
+
+  augmentComponentClasses() {
+    const occupiedPositions = [];
+
+    for (const component of this.userComponents) {
       let classes;
-      
+
       switch (+component.position) {
         case 1:
           classes = 'col-start-1 row-start-1';
@@ -62,29 +119,71 @@ export class DashboardComponent {
           break;
       }
 
-      classes += ` row-span-${component.height} col-span-${component.width}`
-      
+      classes += ` row-span-${component.height} col-span-${component.width}`;
+
       component.classes = classes;
 
-      occupiedPositions += component.height * component.width
+      const x0 = (component.position - 1) % 3;
+      const y0 = Math.floor((component.position - 1) / 3);
+
+      for (let x = 0; x < component.width; x++) {
+        for (let y = 0; y < component.height; y++) { 
+          occupiedPositions.push(3*(y + y0) + (x + x0) + 1);
+        }
+      }
     }
 
-    this.emptyPositions = Array(6 - occupiedPositions).fill(0);
+    this.emptyPositions = [];
+    for (let position = 1; position <= 6; position++) {
+      if (!occupiedPositions.includes(position)) {
+        let classes = '';
+
+        switch (+position) {
+          case 1:
+            classes = 'col-start-1 row-start-1';
+            break;
+          case 2:
+            classes = 'col-start-2 row-start-1';
+            break;
+          case 3:
+            classes = 'col-start-3 row-start-1';
+            break;
+          case 4:
+            classes = 'col-start-1 row-start-2';
+            break;
+          case 5:
+            classes = 'col-start-2 row-start-2';
+            break;
+          case 6:
+            classes = 'col-start-3 row-start-2';
+            break;
+        }
+
+        this.emptyPositions.push({
+          "position": position,
+          "classes": classes
+        })
+      }
+    }
   }
+
+  @ViewChild('modal', { read: ViewContainerRef })
+  entry!: ViewContainerRef;
+  sub!: Subscription;
 
   constructor(
     private authService: FireAuthService,
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    private modalService: ModalService
   ) {
     this.userData = {
-      "name": "Anna",
-      "birthday": "1920-01-01T00:00:0.000Z",
-      "mailAddress": "anna.sulzer@shinternet.ch"
+      name: 'Anna',
+      birthday: '1920-01-01T00:00:0.000Z',
+      mailAddress: 'anna.sulzer@shinternet.ch',
     };
-   }
+  }
 
-
-  async ngAfterContentInit(): Promise<void> {    
+  async ngAfterContentInit(): Promise<void> {
     this.signedOut = true;
 
     if (localStorage.getItem('user')) {
@@ -92,12 +191,16 @@ export class DashboardComponent {
       this.signedOut = false;
     } else {
       await this.authService.storeUser();
-      
+
       if (localStorage.getItem('user')) {
         this.signedOut = false;
         this.subscribe();
       }
     }
+  }
+
+  ngOnDestroy(): void {
+    if (this.sub) this.sub.unsubscribe();
   }
 
   async login(): Promise<void> {
@@ -107,8 +210,7 @@ export class DashboardComponent {
   subscribe(): void {
     this.firestoreService.getAll()?.subscribe((data) => {
       this.userComponents = data;
-      this.augmentComponentClasses()
+      this.augmentComponentClasses();
     });
   }
-
 }

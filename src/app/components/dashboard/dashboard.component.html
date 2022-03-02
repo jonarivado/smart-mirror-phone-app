@@ -25,21 +25,24 @@
     <div
       class="grid grid-cols-3 grid-rows-2 gap-2 pl-4 pr-4"
       style="min-height: calc(100vh / 3)"
+      *ngIf="!this.selectorOpen"
     >
       <ng-container *ngFor="let empty of emptyPositions">
-        <div class="shadow-xl rounded-xl flex items-center justify-center">
+        <div class="shadow-xl rounded-xl flex items-center justify-center {{empty.classes}}" (click)="openSelector(empty.position)">
           <img src="../../../assets/img/plus_gray.svg" alt="" />
         </div>
       </ng-container>
+
       <ng-container *ngFor="let component of userComponents">
         <div
           *ngIf="component.id == 'weather'"
           (click)="showDeleteButton(component.id)"
-          class="{{ component.classes }}
-            bg-gradient-to-r from-blue-400 to-blue-600 relative shadow-xl rounded-xl flex items-center justify-center"
+          class="{{
+            component.classes
+          }} bg-gradient-to-r from-blue-400 to-blue-600 relative shadow-xl rounded-xl flex items-center justify-center"
         >
           <div
-            (click)="deleteComponent(component.position)"
+            (click)="deleteComponent(component)"
             id="{{ component.id }}"
             class="hidden absolute"
             style="left: -8px; top: -8px"
@@ -48,14 +51,16 @@
           </div>
           <app-weather></app-weather>
         </div>
+
         <div
           *ngIf="component.id == 'clock'"
           (click)="showDeleteButton(component.id)"
-          class="{{ component.classes }}
-            bg-gradient-to-r from-white to-gray-200 relative shadow-xl   rounded-xl flex items-center justify-center"
+          class="{{
+            component.classes
+          }} bg-gradient-to-r from-white to-gray-200 relative shadow-xl rounded-xl flex items-center justify-center"
         >
           <div
-            (click)="deleteComponent(component.position)"
+            (click)="deleteComponent(component)"
             id="{{ component.id }}"
             class="hidden absolute"
             style="left: -8px; top: -8px"
@@ -64,24 +69,50 @@
           </div>
           <app-clock></app-clock>
         </div>
+
+        <div
+          *ngIf="component.id == 'sbb'"
+          (click)="showDeleteButton(component.id)"
+          class="{{
+            component.classes
+          }} bg-gradient-to-r from-red-200 to-red-400 relative shadow-xl rounded-xl flex items-center justify-center"
+        >
+          <div
+            (click)="deleteComponent(component)"
+            id="{{ component.id }}"
+            class="hidden absolute"
+            style="left: -8px; top: -8px"
+          >
+            <img src="../../../assets/img/delete.svg" alt="" />
+          </div>
+          <app-sbb></app-sbb>
+        </div>
+
+        <div
+          *ngIf="component.id == 'meme'"
+          (click)="showDeleteButton(component.id)"
+          class="{{
+            component.classes
+          }} bg-gradient-to-r from-green-400 to-green-600 relative shadow-xl rounded-xl flex items-center justify-center"
+        >
+          <div
+            (click)="deleteComponent(component)"
+            id="{{ component.id }}"
+            class="hidden absolute"
+            style="left: -8px; top: -8px"
+          >
+            <img src="../../../assets/img/delete.svg" alt="" />
+          </div>
+          <app-meme></app-meme>
+        </div>
       </ng-container>
     </div>
   </div>
-  <div>
-    <div class="p-4 text-xl font-bold">Add components</div>
+
+  <div *ngIf="this.selectorOpen">
+    <div class="p-4 text-xl font-bold">Add component</div>
     <div class="grid grid-cols-1 gap-2 pl-4 pr-4">
-      <div class="shadow-xl w-full rounded-xl">House Temperature</div>
-      <div class="shadow-xl w-full rounded-xl">House Temperature</div>
+      <div class="shadow-xl w-full rounded-xl" *ngFor="let component of allComponents" (click)="addComponent(component)">{{ component.name }}</div>
     </div>
   </div>
-
-  <!-- <div *ngFor="let component of userComponents">
-    <div *ngIf="component.id == 'weather'">
-        W
-    </div>
-    <div *ngIf="component.id == 'clock'">
-        <app-clock type={{component.clockType}}></app-clock>
-    </div>
-    <div class="p-4 text-xl font-bold">{{component.id}}</div>
-</div> -->
 </div>
