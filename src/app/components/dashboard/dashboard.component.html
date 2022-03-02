@@ -1,9 +1,13 @@
 <div class="">
-    <div class=" w-full pb-4">
-        <div class="flex justify-between pl4 pr-4">
-            <div class="p-4 text-2xl font-bold">{{userData?.name}}'s Mirror</div>
-            <div class="flex items-center justify-center"><a routerLink="/settings" routerLinkActive="active"><img src="../../../assets/img/settings.svg" alt=""></a></div>
-        </div>
+  <div class="w-full pb-4">
+    <div class="flex justify-between pl4 pr-4">
+      <div class="p-4 text-2xl font-bold">{{ userData?.name }}'s Mirror</div>
+      <div class="flex items-center justify-center">
+        <a routerLink="/settings" routerLinkActive="active"
+          ><img src="../../../assets/img/settings.svg" alt=""
+        /></a>
+      </div>
+    </div>
     <!-- <div class="grid grid-cols-3 grid-rows-2 gap-2 pl-4 pr-4">
         <div class="shadow-xl   rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
         <div class="shadow-xl   rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
@@ -14,42 +18,101 @@
     </div>
 </div> -->
 
-<div class="grid grid-cols-3 grid-rows-2 gap-2 pl-4 pr-4" style="min-height: calc(100vh/3);" >
-    <ng-container *ngFor="let empty of emptyPositions">
-        <div class="shadow-xl   rounded-xl flex items-center justify-center">
-            <img src="../../../assets/img/plus_gray.svg" alt="">
+    <button (click)="login()" *ngIf="this.signedOut" class="bg-blue-800">
+      Login
+    </button>
+
+    <div
+      class="grid grid-cols-3 grid-rows-2 gap-2 pl-4 pr-4"
+      style="min-height: calc(100vh / 3)"
+      *ngIf="!this.selectorOpen"
+    >
+      <ng-container *ngFor="let empty of emptyPositions">
+        <div class="shadow-xl rounded-xl flex items-center justify-center {{empty.classes}}" (click)="openSelector(empty.position)">
+          <img src="../../../assets/img/plus_gray.svg" alt="" />
         </div>
-    </ng-container>
-    <ng-container *ngFor="let component of userComponents">
-    <div *ngIf="component.id == 'weather'" (click)='showDeleteButton(component.id)' class="{{positions.weather}} {{width.weather}} {{height.weather}} bg-gradient-to-r from-blue-400 to-blue-600 relative shadow-xl rounded-xl flex items-center justify-center">
-        <div (click)='deleteComponent(component.position)' id="{{component.id}}" class="hidden absolute" style="left: -8px; top: -8px"><img src="../../../assets/img/delete.svg" alt=""></div>
-        <app-weather></app-weather>
-    </div>
-</ng-container>
-<ng-container *ngFor="let component of userComponents">
-    <div *ngIf="component.id == 'clock'" (click)='showDeleteButton(component.id)' class="{{positions.clock}} {{width.clock}} {{height.clock}}  bg-gradient-to-r from-white to-gray-200 relative shadow-xl   rounded-xl flex items-center justify-center">
-        <div (click)='deleteComponent(component.position)' id="{{component.id}}" class="hidden absolute" style="left: -8px; top: -8px"><img src="../../../assets/img/delete.svg" alt=""></div>
-        <app-clock></app-clock>
-    </div>
-</ng-container>
-</div>
+      </ng-container>
 
-</div>
-<div>
-    <div class="p-4 text-xl font-bold">Add components</div>
+      <ng-container *ngFor="let component of userComponents">
+        <div
+          *ngIf="component.id == 'weather'"
+          (click)="showDeleteButton(component.id)"
+          class="{{
+            component.classes
+          }} bg-gradient-to-r from-blue-400 to-blue-600 relative shadow-xl rounded-xl flex items-center justify-center"
+        >
+          <div
+            (click)="deleteComponent(component)"
+            id="{{ component.id }}"
+            class="hidden absolute"
+            style="left: -8px; top: -8px"
+          >
+            <img src="../../../assets/img/delete.svg" alt="" />
+          </div>
+          <app-weather></app-weather>
+        </div>
+
+        <div
+          *ngIf="component.id == 'clock'"
+          (click)="showDeleteButton(component.id)"
+          class="{{
+            component.classes
+          }} bg-gradient-to-r from-white to-gray-200 relative shadow-xl rounded-xl flex items-center justify-center"
+        >
+          <div
+            (click)="deleteComponent(component)"
+            id="{{ component.id }}"
+            class="hidden absolute"
+            style="left: -8px; top: -8px"
+          >
+            <img src="../../../assets/img/delete.svg" alt="" />
+          </div>
+          <app-clock></app-clock>
+        </div>
+
+        <div
+          *ngIf="component.id == 'sbb'"
+          (click)="showDeleteButton(component.id)"
+          class="{{
+            component.classes
+          }} bg-gradient-to-r from-red-200 to-red-400 relative shadow-xl rounded-xl flex items-center justify-center"
+        >
+          <div
+            (click)="deleteComponent(component)"
+            id="{{ component.id }}"
+            class="hidden absolute"
+            style="left: -8px; top: -8px"
+          >
+            <img src="../../../assets/img/delete.svg" alt="" />
+          </div>
+          <app-sbb></app-sbb>
+        </div>
+
+        <div
+          *ngIf="component.id == 'meme'"
+          (click)="showDeleteButton(component.id)"
+          class="{{
+            component.classes
+          }} bg-gradient-to-r from-green-400 to-green-600 relative shadow-xl rounded-xl flex items-center justify-center"
+        >
+          <div
+            (click)="deleteComponent(component)"
+            id="{{ component.id }}"
+            class="hidden absolute"
+            style="left: -8px; top: -8px"
+          >
+            <img src="../../../assets/img/delete.svg" alt="" />
+          </div>
+          <app-meme></app-meme>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div *ngIf="this.selectorOpen">
+    <div class="p-4 text-xl font-bold">Add component</div>
     <div class="grid grid-cols-1 gap-2 pl-4 pr-4">
-        <div class="shadow-xl w-full rounded-xl">House Temperature</div>
-        <div class="shadow-xl w-full rounded-xl">House Temperature</div>
+      <div class="shadow-xl w-full rounded-xl" *ngFor="let component of allComponents" (click)="addComponent(component)">{{ component.name }}</div>
     </div>
+  </div>
 </div>
-
-<!-- <div *ngFor="let component of userComponents">
-    <div *ngIf="component.id == 'weather'">
-        W
-    </div>
-    <div *ngIf="component.id == 'clock'">
-        <app-clock type={{component.clockType}}></app-clock>
-    </div>
-    <div class="p-4 text-xl font-bold">{{component.id}}</div>
-</div> -->
-

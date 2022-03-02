@@ -5,7 +5,7 @@
   },
   "hosting": {
     "target": "smart-mirror-display",
-    "public": "dist/smart-mirror-display",
+    "public": "dist/smart-mirror-phone-app",
     "ignore": [
       "**/.*"
     ],
