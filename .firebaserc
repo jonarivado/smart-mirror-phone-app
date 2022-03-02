@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "smartmirror-339017"
+  },
+  "targets": {
+    "smartmirror-339017": {
+      "hosting": {
+        "smart-mirror-display": [
+          "smartmirror-339017"
+        ]
+      }
+    }
+  }
+}
