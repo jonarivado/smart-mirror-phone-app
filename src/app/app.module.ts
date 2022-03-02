@@ -18,9 +18,6 @@ import { ComponentSelectorComponent } from './component-selector/component-selec
 import { MemeComponent } from './components/widgets/meme/meme.component';
 
 
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,16 +32,10 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
   imports: [
     BrowserModule,
     AppRoutingModule,
-<<<<<<< HEAD
-    provideFirebaseApp(() => initializeApp(environment.firebase)),$provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),    
-    HttpClientModule
-=======
     HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
->>>>>>> detached
   ],
   providers: [],
   bootstrap: [AppComponent]
