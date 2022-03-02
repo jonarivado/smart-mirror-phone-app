@@ -16,6 +16,7 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { ComponentSelectorComponent } from './component-selector/component-selector.component';
 import { MemeComponent } from './components/widgets/meme/meme.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import { MemeComponent } from './components/widgets/meme/meme.component';
     WeatherComponent,
     SbbComponent,
     ComponentSelectorComponent,
-    MemeComponent
+    MemeComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +37,7 @@ import { MemeComponent } from './components/widgets/meme/meme.component';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
