@@ -114,6 +114,9 @@
   </div>
 
   <div *ngIf="this.selectorOpen">
+    <div class="p-2" (click)="this.selectorOpen = false">
+      <img src="../../../assets/img/ui/backbutton.svg" width="35px" alt="">
+    </div>
     <div class="p-4 text-xl font-bold">Add component</div>
     <div class="grid grid-cols-1 gap-2 pl-4 pr-4">
       <div class="shadow-xl w-full rounded-xl" *ngFor="let component of allComponents" (click)="addComponent(component)">{{ component.name }}</div>
