@@ -8,106 +8,49 @@
         /></a>
       </div>
     </div>
-    <!-- <div class="grid grid-cols-3 grid-rows-2 gap-2 pl-4 pr-4">
-        <div class="shadow-xl   rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
-        <div class="shadow-xl   rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
-        <div class="shadow-xl   rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
-        <div class="shadow-xl   rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
-        <div class="shadow-xl   rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
-        <div class="shadow-xl   rounded-xl flex items-center justify-center"><img src="../../../assets/img/plus_gray.svg" alt=""></div>
-    </div>
-</div> -->
-
     <button (click)="login()" *ngIf="this.signedOut" class="bg-blue-800">
       Login
     </button>
 
     <div
       class="grid grid-cols-3 grid-rows-2 gap-2 pl-4 pr-4"
-      
       *ngIf="!this.selectorOpen"
     >
       <ng-container *ngFor="let empty of emptyPositions">
-        <div class="aspect-w-1 aspect-h-1 shadow-xl rounded-xl flex items-center justify-center {{empty.classes}}" (click)="openSelector(empty.position)">
+        <div
+          class="aspect-w-1 aspect-h-1 shadow-xl rounded-xl flex items-center justify-center"
+          [style]="empty.style"
+          (click)="openSelector(empty.position)"  
+        >
           <div class="p-4 flex items-center justify-center">
-          <img src="../../../assets/img/plus_gray.svg" alt="" />
-        </div>
+            <img src="../../../assets/img/plus_gray.svg" alt="" />
+          </div>
         </div>
       </ng-container>
 
-      <ng-container *ngFor="let component of userComponents">
+      <ng-container *ngFor="let widget of userWidgets">
         <div
-          *ngIf="component.id == 'weather'"
-          (click)="showDeleteButton(component.id)"
+          (click)="toggleDeleteButton(widget.fireID)"
           class="{{
-            component.classes
-          }} bg-gradient-to-r from-blue-400 to-blue-600 relative shadow-xl rounded-xl flex items-center justify-center"
+            widget.classes
+          }} relative shadow-xl rounded-xl flex items-center justify-center"
+          [style]="widget.style"
         >
           <div
-            (click)="deleteComponent(component)"
-            id="{{ component.id }}"
+            (click)="deleteWidget(widget)"
+            id="{{ widget.fireID }}"
             class="hidden absolute"
-            style="left: -8px; top: -8px"
+            style="left: -8px; top: -8px;"
           >
             <img src="../../../assets/img/delete.svg" alt="" />
           </div>
-          <app-weather></app-weather>
-        </div>
 
-        <div
-          *ngIf="component.id == 'clock'"
-          (click)="showDeleteButton(component.id)"
-          class="{{
-            component.classes
-          }} bg-gradient-to-r from-white to-gray-200 relative aspect-w-1 aspect-h-1 shadow-xl rounded-xl flex items-center justify-center"
-        >
-          <div
-            (click)="deleteComponent(component)"
-            id="{{ component.id }}"
-            class="hidden absolute"
-            style="left: -8px; top: -8px"
-          >
-            <img src="../../../assets/img/delete.svg" alt="" />
-          </div>
+          <app-weather *ngIf="widget.id == 'weather'" [properties]="widget.properties"></app-weather>
           <div class="flex items-center justify-center">
-          <app-clock></app-clock>
-        </div>
-        </div>
-
-        <div
-          *ngIf="component.id == 'sbb'"
-          (click)="showDeleteButton(component.id)"
-          class="{{
-            component.classes
-          }} bg-gradient-to-r from-red-500 to-red-700 relative shadow-xl rounded-xl flex items-center justify-center"
-        >
-          <div
-            (click)="deleteComponent(component)"
-            id="{{ component.id }}"
-            class="hidden absolute"
-            style="left: -8px; top: -8px"
-          >
-            <img src="../../../assets/img/delete.svg" alt="" />
+            <app-clock *ngIf="widget.id == 'clock'"></app-clock>
           </div>
-          <app-sbb></app-sbb>
-        </div>
-
-        <div
-          *ngIf="component.id == 'meme'"
-          (click)="showDeleteButton(component.id)"
-          class="{{
-            component.classes
-          }} bg-gradient-to-r from-green-400 to-green-600 relative shadow-xl rounded-xl flex items-center justify-center"
-        >
-          <div
-            (click)="deleteComponent(component)"
-            id="{{ component.id }}"
-            class="hidden absolute"
-            style="left: -8px; top: -8px"
-          >
-            <img src="../../../assets/img/delete.svg" alt="" />
-          </div>
-          <app-meme></app-meme>
+          <app-sbb *ngIf="widget.id == 'sbb'"></app-sbb>
+          <app-meme *ngIf="widget.id == 'meme'"></app-meme>          
         </div>
       </ng-container>
     </div>
@@ -118,8 +61,15 @@
       <img src="../../../assets/img/ui/backbutton.svg" width="35px" alt="">
     </div>
     <div class="p-4 text-xl font-bold">Add component</div>
+    <div class="p-4 text-xl font-bold">Widget hinzufügen</div>
     <div class="grid grid-cols-1 gap-2 pl-4 pr-4">
-      <div class="shadow-xl w-full rounded-xl" *ngFor="let component of allComponents" (click)="addComponent(component)">{{ component.name }}</div>
+      <div
+        class="shadow-xl w-full rounded-xl"
+        *ngFor="let widget of allWidgets"
+        (click)="addWidget(widget.id)"
+      >
+        {{ widget.name }}
+      </div>
     </div>
   </div>
 </div>

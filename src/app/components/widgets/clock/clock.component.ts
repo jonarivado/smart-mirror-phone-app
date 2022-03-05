@@ -1,29 +1,34 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { IWidget } from 'src/app/services/firestore.service';
+
+export const clockDefault: IWidget = {
+  id: 'clock',
+  name: 'Uhr',
+  height: 1,
+  width: 1,
+  properties: {},
+  classes: 'aspect-w-1 aspect-h-1 bg-gradient-to-r from-white to-gray-200',
+  style: '',
+};
 
 @Component({
   selector: 'app-clock',
   templateUrl: './clock.component.html',
-  styleUrls: ['./clock.component.scss']
+  styleUrls: ['./clock.component.scss'],
 })
-export class ClockComponent implements OnInit {
-
-  @Input() type?: string = '';
-  @Input() colPosition?: string;
-  @Input() rowPosition?: string;
-  @Input() colSpan?: string;
-  @Input() rowSpan?: string;
-
-  time: any;
-
+export class ClockComponent {
+  timeString: string = '';
 
   refreshTime() {
     let now: Date = new Date();
+
     let hours = now.getHours();
     let minutes = now.getMinutes();
     let seconds = now.getSeconds();
+
     let secondsString = seconds < 10 ? '0' + seconds : seconds;
-    let minutesString  = minutes < 10 ? '0' + minutes : minutes;
-    this.time =  hours + ':' + minutesString + ':' + secondsString;
+    let minutesString = minutes < 10 ? '0' + minutes : minutes;
+    this.timeString = hours + ':' + minutesString + ':' + secondsString;
   }
 
   //call refreshTime() every second
@@ -33,13 +38,4 @@ export class ClockComponent implements OnInit {
       this.refreshTime();
     }, 1000);
   }
-
-
-  constructor() { 
-    
-  }
-
-  ngOnInit(): void {
-  }
-
 }
