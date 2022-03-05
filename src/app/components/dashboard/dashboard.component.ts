@@ -1,17 +1,14 @@
-import {
-  AfterContentInit,
-  Component,
-  OnInit,
-  ViewChild,
-  ViewContainerRef,
-} from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';
 import { FireAuthService } from 'src/app/services/fireauth.service';
+import { FirestoreService, IWidget } from 'src/app/services/firestore.service';
 import {
-  FirestoreService,
-  IComponent,
-} from 'src/app/services/firestore.service';
-import { ModalService } from 'src/app/services/modal.service';
+  addPositionStyles,
+  allWidgets,
+  applyDefaultStyle,
+  cloneWidget,
+  getEmptyPositions,
+  idToWidgets,
+} from '../widgets/widgets';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,56 +17,20 @@ import { ModalService } from 'src/app/services/modal.service';
 })
 export class DashboardComponent {
   userData?: any = {};
-  userComponents?: any;
-  positions?: any = [];
-  height?: any = [];
-  width?: any = [];
-  occupiedPositions: number = 0;
+  userWidgets?: any;
   emptyPositions?: any;
 
   signedOut: boolean = true;
   selectorOpen: boolean = false;
   selectedPosition: number = 1;
 
-  allComponents = [
-    {
-      "id": "weather",
-      "name": "Wetter",
-      "height": 2,
-      "width": 1,
-      "properties": {}
-    },
-    {
-      "id": "clock",
-      "name": "Uhr",
-      "height": 1,
-      "width": 1,
-      "properties": {}
-    },
-    {
-      "id": "sbb",
-      "name": "SBB",
-      "height": 1,
-      "width": 2,
-      "properties": {
-        "start": "Limmatplatz",
-        "destinations": ["Zürich HB", "ETH", "Schaffhausen"]
-      }
-    },
-    {
-      "id": "meme",
-      "name": "Meme",
-      "height": 1,
-      "width": 1,
-      "properties": {}
-    }
-  ]
-  
-  deleteComponent(component: IComponent) {
-    this.firestoreService.deleteComponent(component);
+  allWidgets: Array<IWidget> = allWidgets;
+
+  deleteWidget(widget: IWidget) {
+    this.firestoreService.deleteComponent(widget);
   }
 
-  showDeleteButton(id: string) {
+  toggleDeleteButton(id: string) {
     const component = document.getElementById(id);
 
     if (!component) return;
@@ -86,95 +47,19 @@ export class DashboardComponent {
     this.selectedPosition = position;
   }
 
-  addComponent(component: any) {
+  addWidget(widget_id: string) {
+    const defaultWidget = idToWidgets[widget_id];
+    const newWidget = cloneWidget(defaultWidget);
+
+    newWidget.position = this.selectedPosition;
+    this.firestoreService.addComponent(newWidget);
+
     this.selectorOpen = false;
-    component['position'] = this.selectedPosition;
-    this.firestoreService.addComponent(component);
-  } 
-
-  augmentComponentClasses() {
-    const occupiedPositions = [];
-
-    for (const component of this.userComponents) {
-      let classes;
-
-      switch (+component.position) {
-        case 1:
-          classes = 'col-start-1 row-start-1';
-          break;
-        case 2:
-          classes = 'col-start-2 row-start-1';
-          break;
-        case 3:
-          classes = 'col-start-3 row-start-1';
-          break;
-        case 4:
-          classes = 'col-start-1 row-start-2';
-          break;
-        case 5:
-          classes = 'col-start-2 row-start-2';
-          break;
-        case 6:
-          classes = 'col-start-3 row-start-2';
-          break;
-      }
-
-      classes += ` row-span-${component.height} col-span-${component.width}`;
-
-      component.classes = classes;
-
-      const x0 = (component.position - 1) % 3;
-      const y0 = Math.floor((component.position - 1) / 3);
-
-      for (let x = 0; x < component.width; x++) {
-        for (let y = 0; y < component.height; y++) { 
-          occupiedPositions.push(3*(y + y0) + (x + x0) + 1);
-        }
-      }
-    }
-
-    this.emptyPositions = [];
-    for (let position = 1; position <= 6; position++) {
-      if (!occupiedPositions.includes(position)) {
-        let classes = '';
-
-        switch (+position) {
-          case 1:
-            classes = 'col-start-1 row-start-1';
-            break;
-          case 2:
-            classes = 'col-start-2 row-start-1';
-            break;
-          case 3:
-            classes = 'col-start-3 row-start-1';
-            break;
-          case 4:
-            classes = 'col-start-1 row-start-2';
-            break;
-          case 5:
-            classes = 'col-start-2 row-start-2';
-            break;
-          case 6:
-            classes = 'col-start-3 row-start-2';
-            break;
-        }
-
-        this.emptyPositions.push({
-          "position": position,
-          "classes": classes
-        })
-      }
-    }
   }
-
-  @ViewChild('modal', { read: ViewContainerRef })
-  entry!: ViewContainerRef;
-  sub!: Subscription;
 
   constructor(
     private authService: FireAuthService,
-    private firestoreService: FirestoreService,
-    private modalService: ModalService
+    private firestoreService: FirestoreService
   ) {
     this.userData = {
       name: 'Anna',
@@ -199,18 +84,18 @@ export class DashboardComponent {
     }
   }
 
-  ngOnDestroy(): void {
-    if (this.sub) this.sub.unsubscribe();
-  }
-
   async login(): Promise<void> {
     this.authService.login();
   }
 
   subscribe(): void {
     this.firestoreService.getAll()?.subscribe((data) => {
-      this.userComponents = data;
-      this.augmentComponentClasses();
+      this.userWidgets = data;
+      applyDefaultStyle(this.userWidgets);
+      addPositionStyles(this.userWidgets);
+
+      this.emptyPositions = getEmptyPositions(this.userWidgets);
+      addPositionStyles(this.emptyPositions);
     });
   }
 }
