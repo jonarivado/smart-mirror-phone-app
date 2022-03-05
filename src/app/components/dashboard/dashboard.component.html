@@ -24,12 +24,14 @@
 
     <div
       class="grid grid-cols-3 grid-rows-2 gap-2 pl-4 pr-4"
-      style="min-height: calc(100vh / 3)"
+      
       *ngIf="!this.selectorOpen"
     >
       <ng-container *ngFor="let empty of emptyPositions">
-        <div class="shadow-xl rounded-xl flex items-center justify-center {{empty.classes}}" (click)="openSelector(empty.position)">
+        <div class="aspect-w-1 aspect-h-1 shadow-xl rounded-xl flex items-center justify-center {{empty.classes}}" (click)="openSelector(empty.position)">
+          <div class="p-4 flex items-center justify-center">
           <img src="../../../assets/img/plus_gray.svg" alt="" />
+        </div>
         </div>
       </ng-container>
 
@@ -57,7 +59,7 @@
           (click)="showDeleteButton(component.id)"
           class="{{
             component.classes
-          }} bg-gradient-to-r from-white to-gray-200 relative shadow-xl rounded-xl flex items-center justify-center"
+          }} bg-gradient-to-r from-white to-gray-200 relative aspect-w-1 aspect-h-1 shadow-xl rounded-xl flex items-center justify-center"
         >
           <div
             (click)="deleteComponent(component)"
@@ -67,7 +69,9 @@
           >
             <img src="../../../assets/img/delete.svg" alt="" />
           </div>
+          <div class="flex items-center justify-center">
           <app-clock></app-clock>
+        </div>
         </div>
 
         <div
@@ -75,7 +79,7 @@
           (click)="showDeleteButton(component.id)"
           class="{{
             component.classes
-          }} bg-gradient-to-r from-red-200 to-red-400 relative shadow-xl rounded-xl flex items-center justify-center"
+          }} bg-gradient-to-r from-red-500 to-red-700 relative shadow-xl rounded-xl flex items-center justify-center"
         >
           <div
             (click)="deleteComponent(component)"
