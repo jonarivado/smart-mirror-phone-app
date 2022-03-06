@@ -19,6 +19,7 @@ import { MemeComponent } from './components/widgets/meme/meme.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TodoComponent } from './components/widgets/todo/todo.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SbbComponent,
     ComponentSelectorComponent,
     MemeComponent,
+    TodoComponent,
   ],
   imports: [
     BrowserModule,
