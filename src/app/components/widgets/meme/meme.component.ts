@@ -9,6 +9,7 @@ export const memeDefault: IWidget = {
   properties: {},
   classes: 'aspect-w-1 aspect-h-1 bg-gradient-to-r from-green-400 to-green-600',
   style: '',
+  description: 'Displays a new meme from Reddit every few minutes.',
 };
 
 @Component({

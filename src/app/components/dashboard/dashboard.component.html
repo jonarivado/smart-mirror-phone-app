@@ -15,6 +15,7 @@
     <div
       class="grid grid-cols-3 grid-rows-2 gap-2 pl-4 pr-4"
       *ngIf="!this.selectorOpen"
+      [@fadeInDelayed]
     >
       <ng-container *ngFor="let empty of emptyPositions">
         <div
@@ -50,21 +51,32 @@
             <app-clock *ngIf="widget.id == 'clock'"></app-clock>
           </div>
           <app-sbb *ngIf="widget.id == 'sbb'"></app-sbb>
-          <app-meme *ngIf="widget.id == 'meme'"></app-meme>          
+          <app-meme *ngIf="widget.id == 'meme'"></app-meme>
+          <app-todo *ngIf="widget.id == 'todo'"></app-todo>              
         </div>
       </ng-container>
     </div>
   </div>
 
-  <div *ngIf="this.selectorOpen">
-    <div class="p-4 text-xl font-bold">Widget hinzufügen</div>
-    <div class="grid grid-cols-1 gap-2 pl-4 pr-4">
+  <div *ngIf="this.selectorOpen" [@inOutAnimation]>
+    <div class="p-4" (click)="this.selectorOpen = false">
+      <img src="../../../assets/img/ui/backbutton.svg" width="35px" alt="">
+    </div>
+    <div class="p-4 text-xl font-bold">Add component</div>
+    <div class="grid grid-cols-3 grid-rows-2  gap-2 pl-4 pr-4">
       <div
-        class="shadow-xl w-full rounded-xl"
+        class="aspect-w-1 aspect-h-1 shadow-xl rounded-xl flex items-center justify-center"
         *ngFor="let widget of allWidgets"
         (click)="addWidget(widget.id)"
       >
-        {{ widget.name }}
+      <div class="p-1">
+       <div class="text-lg font-semibold">
+         {{ widget.name }}
+      </div>
+      <div class="text-sm">
+        {{ widget.description }}
+      </div>
+      </div>
       </div>
     </div>
   </div>

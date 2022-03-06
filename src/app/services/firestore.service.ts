@@ -15,6 +15,7 @@ export interface IWidget {
   properties: Record<string, any>;
   style?: string;
   classes?: string;
+  description?: string;
 }
 
 @Injectable({

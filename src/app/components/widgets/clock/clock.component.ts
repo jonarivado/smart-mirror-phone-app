@@ -9,6 +9,7 @@ export const clockDefault: IWidget = {
   properties: {},
   classes: 'aspect-w-1 aspect-h-1 bg-gradient-to-r from-white to-gray-200',
   style: '',
+  description: 'Displays the current time.',
 };
 
 @Component({

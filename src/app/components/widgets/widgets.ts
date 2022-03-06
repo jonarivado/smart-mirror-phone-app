@@ -3,7 +3,7 @@ import { clockDefault } from './clock/clock.component';
 import { memeDefault } from './meme/meme.component';
 import { sbbDefault } from './sbb/sbb.component';
 import { weatherDefault } from './weather/weather.component';
-
+import { todoDefault } from './todo/todo.component';
 
 function getX(position: number) {
   return (position - 1) % 3;
@@ -17,6 +17,7 @@ export const allWidgets: Array<IWidget> = [
   weatherDefault,
   sbbDefault,
   memeDefault,
+  todoDefault
 ];
 
 export const idToWidgets: Record<string, IWidget> = {};

@@ -15,6 +15,7 @@ export const weatherDefault: IWidget = {
   },
   classes: 'bg-gradient-to-r from-blue-400 to-blue-600',
   style: '',
+  description: 'Displays the current weather from a specified location.',
 };
 
 @Component({

@@ -18,6 +18,8 @@ import { ComponentSelectorComponent } from './component-selector/component-selec
 import { MemeComponent } from './components/widgets/meme/meme.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TodoComponent } from './components/widgets/todo/todo.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     SbbComponent,
     ComponentSelectorComponent,
     MemeComponent,
+    TodoComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

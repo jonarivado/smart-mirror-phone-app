@@ -10,10 +10,58 @@ import {
   idToWidgets,
 } from '../widgets/widgets';
 
+import { trigger, state, style, animate, transition } from '@angular/animations';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
+
+  animations: [
+    trigger(
+      'inOutAnimation', 
+      [
+        transition(
+          ':enter', 
+          [
+            style({opacity: 0, transform: 'translateY(100px)'}),
+            animate('0.2s 0.2s ease-out', 
+                    style({opacity: 1, transform: 'translateY(0px)' }))
+          ]
+        ),
+        transition(
+          ':leave', 
+          [
+            style({opacity: 1,transform: 'translateY(0px)' }),
+            animate('0.2s ease-in', 
+                    style({opacity: 0,transform: 'translateY(100px)' }))
+          ]
+        )
+      ]
+    ),
+    trigger(
+      'fadeInDelayed', 
+      [
+        transition(
+          ':enter', 
+          [
+            style({opacity: 0, transform: 'translateY(-100px)'}),
+            animate('0.2s 0.2s ease-out', 
+                    style({opacity: 1, transform: 'translateY(0px)' }))
+          ]
+        ),
+        transition(
+          ':leave', 
+          [
+            style({opacity: 1,transform: 'translateY(0px)' }),
+            animate('0.2s ease-in', 
+                    style({opacity: 0,transform: 'translateY(-100px)' }))
+          ]
+        )
+      ]
+    ),
+  ]
+
 })
 export class DashboardComponent {
   userData?: any = {};
