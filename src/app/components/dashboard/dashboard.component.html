@@ -40,16 +40,14 @@
           <div
             (click)="deleteWidget(widget)"
             id="{{ widget.fireID }}"
-            class="hidden absolute"
+            class="hidden absolute z-10"
             style="left: -8px; top: -8px;"
           >
             <img src="../../../assets/img/delete.svg" alt="" />
           </div>
 
           <app-weather *ngIf="widget.id == 'weather'" [properties]="widget.properties"></app-weather>
-          <div class="flex items-center justify-center">
-            <app-clock *ngIf="widget.id == 'clock'"></app-clock>
-          </div>
+          <app-clock *ngIf="widget.id == 'clock'"></app-clock>
           <app-sbb *ngIf="widget.id == 'sbb'"></app-sbb>
           <app-meme *ngIf="widget.id == 'meme'"></app-meme>
           <app-todo *ngIf="widget.id == 'todo'"></app-todo>              
