@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   Auth,
-  signInWithRedirect,
+  signInWithPopup,
   GoogleAuthProvider,
   getRedirectResult,
 } from '@angular/fire/auth';
@@ -14,22 +14,17 @@ export class FireAuthService {
     this.auth.onAuthStateChanged((user) => {
       if (!user) {
         localStorage.setItem('user', '');
+      } else if (localStorage.getItem('user') === '') {
+        localStorage.setItem('user', JSON.stringify(user));
+        window.location.reload();
       }
     });
   }
 
-  async login() {    
-    signInWithRedirect(this.auth, new GoogleAuthProvider());
+  async login() {
+    signInWithPopup(this.auth, new GoogleAuthProvider());
   }
 
-  async storeUser() {
-    const result = await getRedirectResult(this.auth)
-    
-    if (result) {
-      localStorage.setItem('user', JSON.stringify(result.user));
-    }
-  }
-  
   async logout() {
     await this.auth.signOut();
   }
